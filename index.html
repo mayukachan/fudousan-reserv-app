@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>不動産 予約システム</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>不動産 予約システム</h1>
+
+    <div class="tab-buttons">
+      <button class="tab-button active" onclick="showTab('book')">新規予約</button>
+      <button class="tab-button" onclick="showTab('manage')">予約変更・キャンセル</button>
+    </div>
+
+    <div id="book-tab" class="tab-content">
+      <h2>新規予約</h2>
+      <form id="bookingForm" novalidate>
+        <label for="name">お名前:</label>
+        <input type="text" id="name" name="name" required><br>
+        <label for="email">メールアドレス:</label>
+        <input type="email" id="email" name="email" required><br>
+        <label for="phone">電話番号:</label>
+        <input type="tel" id="phone" name="phone" required><br>
+        <label for="type">予約種別:</label>
+        <select id="type" name="type" required>
+          <option value="">選択してください</option>
+          <option value="内見">内見</option>
+          <option value="面談">面談</option>
+          <option value="相談">相談</option>
+        </select><br>
+        <label for="bookingDate">予約希望日:</label>
+        <input type="date" id="bookingDate" required><br>
+        <p>予約可能な時間枠:</p>
+        <div id="availableSlots" class="slot-grid">
+          <p>予約種別と希望日を選択してください。</p>
+        </div>
+        <input type="hidden" id="selectedSlotStart" name="selectedSlotStart" required>
+        <input type="hidden" id="selectedSlotEnd" name="selectedSlotEnd" required>
+        <input type="hidden" id="lineUserId" name="lineUserId">
+        <button type="submit">予約を確定する</button>
+      </form>
+      <div id="bookingMessage" class="message"></div>
+    </div>
+
+    <div id="manage-tab" class="tab-content hidden">
+      <h2>予約変更・キャンセル</h2>
+      <form id="manageForm" novalidate>
+        <label for="reservationId">予約ID:</label>
+        <input type="text" id="reservationId" name="reservationId" required><br>
+        <label for="actionType">操作:</label>
+        <select id="actionType" name="actionType" required onchange="toggleChangeFields()">
+          <option value="">選択してください</option>
+          <option value="cancel">キャンセル</option>
+          <option value="change">変更</option>
+        </select><br>
+        <div id="changeFields" class="hidden">
+          <h3>変更後の情報</h3>
+          <label for="newType">新しい予約種別:</label>
+          <select id="newType" name="newType">
+            <option value="">（変更なし）</option>
+            <option value="内見">内見</option>
+            <option value="面談">面談</option>
+            <option value="相談">相談</option>
+          </select><br>
+          <label for="newBookingDate">新しい予約希望日:</label>
+          <input type="date" id="newBookingDate"><br>
+          <p>新しい予約可能な時間枠:</p>
+          <div id="newAvailableSlots" class="slot-grid">
+            <p>新しい予約種別と希望日を選択してください。</p>
+          </div>
+          <input type="hidden" id="newSelectedSlotStart" name="newSelectedSlotStart">
+          <input type="hidden" id="newSelectedSlotEnd" name="newSelectedSlotEnd">
+        </div>
+        <button type="submit">実行</button>
+      </form>
+      <div id="manageMessage" class="message"></div>
+    </div>
+  </div>
+
+  <script charset="utf-8" src="https://static.line-scdn.net/liff/sdk/v2/liff.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
