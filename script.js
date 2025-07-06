@@ -7,16 +7,15 @@ const LIFF_ID = '2007697725-VE8g1bbG';
 // ==================================================================
 // 1. メインの処理
 // ==================================================================
+// script.jsの冒頭にある window.onload = ... の部分を、以下の内容に置き換える
+
 window.onload = async () => {
   try {
     await liff.init({ liffId: LIFF_ID });
     if (liff.isLoggedIn()) {
       const profile = await liff.getProfile();
       document.getElementById('lineUserId').value = profile.userId;
-      const hasBooking = await callGas('checkUserReservationStatus', { lineUserId: profile.userId });
-      if (hasBooking) {
-        handleExistingBooking();
-      }
+      // 予約済みかどうかのチェック処理を、ここでは呼び出さない
     }
   } catch (err) {
     console.error(err);
